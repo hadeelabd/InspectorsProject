@@ -56,6 +56,10 @@ namespace InspectorServices
                 tmp.Email = teacher.Email;
                 tmp.Phone = teacher.Phone;
                 tmp.Name = teacher.Name;
+                tmp.Address = teacher.Address;
+                tmp.Age = teacher.Age;
+                tmp.Speialiation = teacher.Speialiation;
+
 
                 db.SaveChanges();
             }

@@ -1,6 +1,13 @@
+using InspectorServices;
+using InspectorServicesInterfaces;
 using InspectorUI.Components;
+using ClassLibrary.persistance;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContextFactory<LibraryContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString(name: "DBConnection")));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

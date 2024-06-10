@@ -1,0 +1,85 @@
+﻿@using INSPECTOR.Domain.Entities
+@using InspectorServicesInterfaces
+
+@if (isVisible)
+{
+    <div class="modal show" tabindex="-1" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@((inspector.Id == 0) ? "Add inspector" : "Edit inspector")</h5>
+                    <button type="button" class="btn-close" aria-label="إغلاق" @onclick="Cancel"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">رقم وظيفي</label>
+                        <input type="text" class="form-control" id="id" @bind="inspector.Id">
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">الاسم</label>
+                        <input type="text" class="form-control" id="name" @bind="inspector.Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">البريد الإلكتروني</label>
+                        <input type="email" class="form-control" id="email" @bind="inspector.Email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phoneNumber" class="form-label">رقم الهاتف</label>
+                        <input type="text" class="form-control" id="phone" @bind="inspector.Phone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">العمر</label>
+                        <input type="email" class="form-control" id="age" @bind="inspector.Age">
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">العنوان</label>
+                        <input type="text" class="form-control" id="addreass" @bind="inspector.Address">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label"> التخصص</label>
+                        <input type="email" class="form-control" id="Speialiation" @bind="inspector.Speialiation">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="Cancel">إلغاء</button>
+                    <button type="button" class="btn btn-primary" @onclick="Save">حفظ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public EventCallback OnSave { get; set; }
+    [Inject] public IInspectorService InspectorService { get; set; }
+    
+    private bool isVisible;
+    private Inspector inspector = new();
+
+    public void Show(Inspector inspector)///////////////////////////
+    {
+        this.inspector = inspector;
+        isVisible = true;
+    }
+
+    private void Save()
+    {
+        if (inspector.Id == 0)
+        {
+            InspectorService.Save(inspector);
+        }
+        else
+        {
+            InspectorService.Update(inspector);
+        }
+
+        isVisible = false;
+        OnSave.InvokeAsync();
+    }
+
+    private void Cancel()
+    {
+        isVisible = false;
+    }
+}

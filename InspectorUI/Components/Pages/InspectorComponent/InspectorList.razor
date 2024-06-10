@@ -1,0 +1,114 @@
+﻿@page "/inspectors"
+@rendermode InteractiveServer
+@using INSPECTOR.Domain.Entities
+@using InspectorServicesInterfaces
+
+
+<h3>Inspectors</h3>
+
+<button class="btn btn-primary" @onclick="ShowAddModal">Add New Inspector</button>
+
+
+<br />
+
+@if (inspectors == null)
+{
+    <span>loading...</span>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>age</th>
+                <th>phone</th>
+                <th>address</th>
+                <th>email</th>
+                <th>Speialiation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var inspector in inspectors)
+            {
+                <tr>
+                    <td>@inspector.Id</td>
+                    <td>@inspector.Name</td>
+                    <td>@inspector.Age</td>
+                    <td>@inspector.Phone</td>
+                    <td>@inspector.Address</td>
+                    <td>@inspector.Email</td>
+                    <td>@inspector.Speialiation</td>
+                    <td>
+                        <button class="btn btn-secondary" @onclick="() => ShowEditModal(inspector)">تعديل</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteInspector(inspector)">حذف</button>
+                        @* <button class="btn btn-info" @onclick="() => ShowAddTeacherModal(inspector)">إضافة رقم وظيفي</button> *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<AddEditInspectorModal @ref="addEditInspectorModal" OnSave="RefreshList" />
+<AddTeacherModal @ref="addTeacherModal" />
+
+@code {
+    [Inject] IInspectorService InspectorService { get; set; }
+
+    private List<Inspector> inspectors;
+
+    private AddTeacherModal addTeacherModal;
+
+
+    private AddEditInspectorModal addEditInspectorModal;
+   //////// <summary>
+                                            /// ////////////////
+                                            /// </summary>
+
+    protected override void OnInitialized()// لما تعطي قيم اساسية  حملهن
+    {
+         LoadInspectors();
+    }
+
+   private void LoadInspectors()
+    {
+        inspectors =  InspectorService.GetAll();
+   }
+
+    private void ShowAddModal()
+    {
+        addEditInspectorModal.Show(new Inspector());///////////////
+    }
+
+    private void ShowEditModal(Inspector inspector)
+    {
+        addEditInspectorModal.Show(inspector);///////////////////
+    }
+
+    private void DeleteInspector(Inspector inspector)
+    {
+        InspectorService.Delete(inspector);
+        LoadInspectors();
+
+
+    }
+
+    private void ShowAddTeacherModal(Inspector inspector)
+    {
+        //addTeacherModal.Show(inspector);
+    }
+
+
+    private void RefreshList()
+    {
+        LoadInspectors();
+    }
+}
+
+
+
+
+

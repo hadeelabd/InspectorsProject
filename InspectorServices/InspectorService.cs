@@ -19,17 +19,17 @@ namespace InspectorServices
         {
             using var db = _contextFactory.CreateDbContext();
 
-            var inspector = db.Inspector.FirstOrDefault(x => x.Id == id);
+            var Inspectors = db.Inspectors.FirstOrDefault(x => x.Id == id);
             
-            return inspector;
+            return Inspectors;
         }
 
         public List<Inspector> GetList(string name)
         {
             using var db = _contextFactory.CreateDbContext();
 
-            var inspectors = db.Inspectors.Where(x => x.Name.Contains(name));
-            return [.. inspectors];
+            var Inspectors = db.Inspectors.Where(x => x.Name.Contains(name));
+            return [.. Inspectors];
         }
 
         public void Save(Inspector inspector)
@@ -55,6 +55,11 @@ namespace InspectorServices
                 tmp.Email = inspector.Email;
                 tmp.Phone = inspector.Phone;
                 tmp.Name = inspector.Name;
+                tmp.Address = inspector.Address;
+                tmp.Age = inspector.Age;
+                tmp.Speialiation = inspector.Speialiation;
+
+
 
                 db.SaveChanges();
             }

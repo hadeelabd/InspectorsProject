@@ -1,0 +1,51 @@
+﻿@inject NavigationManager NavigationManager
+@using INSPECTOR.Domain.Entities
+
+<div class="modal" tabindex="-1" role="dialog" style="display:@(showModal ? "block" : "none")">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">إضافة الرقم الوظيفي للمدرس</h5>
+                <button type="button" class="close" @onclick="CloseModal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="teacherId">رقم وظيفي للمدرس</label>
+                    <input type="number" class="form-control" @bind="teacherId" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @onclick="CloseModal">إلغاء</button>
+                <button type="button" class="btn btn-primary" @onclick="SaveTeacherId">حفظ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool showModal;
+    private int teacherId;
+
+    public void Show()
+    {
+        showModal = true;
+        StateHasChanged();
+    }
+
+    private void CloseModal()
+    {
+        showModal = false;
+        StateHasChanged();
+    }
+
+    private void SaveTeacherId()
+    {
+        // حفظ الرقم الوظيفي هنا
+        Console.WriteLine($"الرقم الوظيفي للمدرس: {teacherId}");
+        CloseModal();
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
+}
+
