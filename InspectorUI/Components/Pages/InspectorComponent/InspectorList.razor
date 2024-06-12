@@ -44,7 +44,7 @@ else
                     <td>
                         <button class="btn btn-secondary" @onclick="() => ShowEditModal(inspector)">تعديل</button>
                         <button class="btn btn-danger" @onclick="() => DeleteInspector(inspector)">حذف</button>
-                        @* <button class="btn btn-info" @onclick="() => ShowAddTeacherModal(inspector)">إضافة رقم وظيفي</button> *@
+                      
                     </td>
                 </tr>
             }
@@ -53,14 +53,14 @@ else
 }
 
 <AddEditInspectorModal @ref="addEditInspectorModal" OnSave="RefreshList" />
-<AddTeacherModal @ref="addTeacherModal" />
+
 
 @code {
     [Inject] IInspectorService InspectorService { get; set; }
 
     private List<Inspector> inspectors;
 
-    private AddTeacherModal addTeacherModal;
+   
 
 
     private AddEditInspectorModal addEditInspectorModal;
