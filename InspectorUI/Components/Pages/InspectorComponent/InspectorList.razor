@@ -53,30 +53,31 @@ else
 }
 
 <AddEditInspectorModal @ref="addEditInspectorModal" OnSave="RefreshList" />
-<AddTeacherModal @ref="addTeacherModal" />
+
 
 @code {
     [Inject] IInspectorService InspectorService { get; set; }
 
     private List<Inspector> inspectors;
 
-    private AddTeacherModal addTeacherModal;
+    
 
 
     private AddEditInspectorModal addEditInspectorModal;
-   //////// <summary>
-                                            /// ////////////////
-                                            /// </summary>
+    //////// <summary>
+    /// ////////////////
+    /// </summary>
 
-    protected override void OnInitialized()// لما تعطي قيم اساسية  حملهن
+    protected override async Task OnInitializedAsync()
     {
-         LoadInspectors();
+        await  LoadInspectors();////////////////////////////////////////////////////////////////////
     }
 
-   private void LoadInspectors()
+    /////////////////////
+    private async Task LoadInspectors()
     {
-        inspectors =  InspectorService.GetAll();
-   }
+        inspectors = await InspectorService.GetAll();
+    }
 
     private void ShowAddModal()
     {
@@ -96,10 +97,7 @@ else
 
     }
 
-    private void ShowAddTeacherModal(Inspector inspector)
-    {
-        //addTeacherModal.Show(inspector);
-    }
+   //
 
 
     private void RefreshList()

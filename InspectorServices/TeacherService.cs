@@ -76,11 +76,11 @@ namespace InspectorServices
             }
         }
 
-        public List<Teacher> GetAll()
+        public  List<Teacher> GetAll()
         {
             using var db = _contextFactory.CreateDbContext();
 
-            return db.Teachers.ToList();
+            return  db.Teachers.ToList();///////////////////
         }
     }
 }

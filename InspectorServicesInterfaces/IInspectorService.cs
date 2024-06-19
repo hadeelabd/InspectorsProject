@@ -7,7 +7,7 @@ namespace InspectorServicesInterfaces
         void Delete(Inspector inspector);
         Inspector Get(int id);
         List<Inspector> GetList(string name);
-        List<Inspector> GetAll();
+       Task <List<Inspector>> GetAll();
         void Save(Inspector inspector);
         void Update(Inspector inspector);
     }

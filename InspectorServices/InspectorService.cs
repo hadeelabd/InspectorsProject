@@ -76,11 +76,11 @@ namespace InspectorServices
             }
         }
 
-        public List<Inspector> GetAll()
+        public async Task<List<Inspector>> GetAll()
         {
             using var db = _contextFactory.CreateDbContext();
 
-            return db.Inspectors.ToList();
+            return [.. await db.Inspectors.ToListAsync()];
         }
     }
 }

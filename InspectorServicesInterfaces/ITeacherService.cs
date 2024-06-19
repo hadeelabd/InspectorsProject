@@ -9,7 +9,7 @@ namespace InspectorServicesInterfaces
         void Delete(Teacher teacher);
         Teacher Get(int id);
         List<Teacher> GetList(string name);
-        List<Teacher> GetAll();
+       List<Teacher> GetAll();
         void Save(Teacher teacher);
         void Update(Teacher teacher);
     }
