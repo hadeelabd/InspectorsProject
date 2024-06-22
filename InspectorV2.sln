@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InspectorServicesInterfaces
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InspectorServices", "InspectorServices\InspectorServices.csproj", "{378F3FC2-6651-48CD-AA36-637E53B115D0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inspector.FluentUI2", "Inspector.FluentUI2\Inspector.FluentUI2.csproj", "{E47F2E4C-B79D-4A7D-B7C9-6C62888C9705}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspector.Tests", "Inspector.Tests\Inspector.Tests.csproj", "{E2EB040E-16C5-4E39-8F98-7EDE4D3767A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{378F3FC2-6651-48CD-AA36-637E53B115D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{378F3FC2-6651-48CD-AA36-637E53B115D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{378F3FC2-6651-48CD-AA36-637E53B115D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E47F2E4C-B79D-4A7D-B7C9-6C62888C9705}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E47F2E4C-B79D-4A7D-B7C9-6C62888C9705}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E47F2E4C-B79D-4A7D-B7C9-6C62888C9705}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E47F2E4C-B79D-4A7D-B7C9-6C62888C9705}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2EB040E-16C5-4E39-8F98-7EDE4D3767A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2EB040E-16C5-4E39-8F98-7EDE4D3767A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2EB040E-16C5-4E39-8F98-7EDE4D3767A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2EB040E-16C5-4E39-8F98-7EDE4D3767A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

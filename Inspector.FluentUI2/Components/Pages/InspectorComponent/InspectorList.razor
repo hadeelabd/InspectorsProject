@@ -1,0 +1,116 @@
+﻿@page "/inspectors"
+@rendermode InteractiveServer
+@using INSPECTORV2.Domain.Entities
+@using InspectorServicesInterfaces
+@inject IDialogService DialogService
+
+
+<h3>Inspectors</h3>
+
+<div style="float:inline-end">
+    <FluentButton Appearance="Appearance.Accent" @onclick="ShowAddModal">Add New Inspector</FluentButton>
+</div>
+
+<br />
+
+@if (inspectors == null)
+{
+    <span>loading...</span>
+}
+else
+{
+
+   <FluentDataGrid Items="@inspectors">
+       @* للجدول *@
+        GenerateHeader="GenerateHeaderOption.Sticky"@*راس الجدول ونوعها استيكي عشان نقدر انثبت السطر اللي فوق  *@
+        ResizableColumns=true
+        Pagination="@pagination"
+        Style="width: 100%; height: 405px;overflow:auto;">
+
+        <PropertyColumn Property="@(p=>p.Id)" Sortable="true"/>        @*لترتيب معلومات العمود sortable *@
+        <PropertyColumn Property="@(p=>p.Name)" Sortable="true" />
+        <PropertyColumn Property="@(p=>p.Age)" Sortable="true" />
+        <PropertyColumn Property="@(p=>p.Phone)" Sortable="true" />
+        <PropertyColumn Property="@(p=>p.Address)" Sortable="true" />
+        <PropertyColumn Property="@(p=>p.Email)" Sortable="true" />
+      <PropertyColumn Property="@(p=>p.Speialiation)" Sortable="true" />
+        @* <PropertyColumn Property="@(p=>p.Action)" Sortable="true" /> *@
+        <TemplateColumn Title="Actions" Align="@Align.End">
+            <FluentButton aria-label="Edit item" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() =>ShowEditModal(context))" />@* الاستاذ طلعله خطا في الدالة حول كلمه المفتش اللي بين الاقواس وحد بدالها كونتكتس context بس انا مطلعلش خطا *@
+            <FluentButton aria-label="Delete item" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() =>DeleteInspector(context) )" />
+        </TemplateColumn>
+       </FluentDataGrid>
+    <FluentPaginator State="@pagination"/>
+    @*   hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh*@
+   }
+
+@*<AddEditInspectorModal @ref="addEditInspectorModal" OnSave="RefreshList" />*@
+
+
+@code {
+    [Inject] IInspectorService InspectorService { get; set; }
+
+    private IQueryable<Inspector> inspectors;
+   
+    private AddEditInspectorDialog addEditInspectorDialog;
+    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        await  LoadInspectors();//
+    }
+
+    /////////////////////
+    private async Task LoadInspectors()
+    {
+            inspectors = (await InspectorService.GetAll()).AsQueryable();
+    }
+
+    private async Task LoadInspectors()
+    {
+        inspectors = (await InspectorService.GetAll()).AsQueryable();
+        StateHasChanged();
+    }
+
+    private async Task OpenDialogAsync(Inspector inspector)
+    {
+        DialogParameters parameters = new DialogParameters()
+            {
+                Title = ((inspector.Id == 0) ? "Add Inspector" : "Edit Inspector"),
+                PrimaryAction = "Yes",
+                PrimaryActionEnabled = false,
+                SecondaryAction = "No",
+                Width = "800px",
+                TrapFocus = true,
+                Modal = true,
+                PreventScroll = true
+            };
+        var dialog = await DialogService.ShowDialogAsync<AddEditInspectorDialog>(inspector, parameters);
+        var result = await dialog.Result;
+
+        if (!result.Cancelled && result.Data != null)
+        {
+            await LoadInspectors();
+        }
+
+    }
+
+    private async Task ShowAddModal()@*في حالة مفتش جديد *@
+    {
+        await OpenDialogAsync(new Inspector());
+    }
+
+    private async void DeleteInspector(Inspector inspector)
+    {
+        await InspectorService.Delete(inspector);
+        await LoadInspectors();
+    }
+
+    private async void RefreshList()
+    {
+        await LoadInspectors();
+    }
+}
+

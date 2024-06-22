@@ -1,10 +1,11 @@
-﻿using INSPECTOR.Domain.Entities;
+﻿using INSPECTORV2.Domain.Entities;
 using ClassLibrary.persistance;
 using InspectorServicesInterfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace InspectorServices
 {
+
     public class InspectorService : IInspectorService
     {
         private readonly IDbContextFactory<LibraryContext> _contextFactory;
@@ -14,25 +15,23 @@ namespace InspectorServices
             _contextFactory = contextFactory;
         }
 
-
-        public Inspector Get(int id)
+        public async Task<Inspector> Get(int id)
         {
             using var db = _contextFactory.CreateDbContext();
 
-            var Inspectors = db.Inspectors.FirstOrDefault(x => x.Id == id);
-            
-            return Inspectors;
+            var inspector = await db.Inspectors.FirstOrDefaultAsync(x => x.Id == id);
+            return inspector;
         }
 
-        public List<Inspector> GetList(string name)
+        public async Task<List<Inspector>> GetList(string name)
         {
             using var db = _contextFactory.CreateDbContext();
 
-            var Inspectors = db.Inspectors.Where(x => x.Name.Contains(name));
-            return [.. Inspectors];
+            var inspectors = db.Inspectors.Where(x => x.Name.Contains(name));
+            return await inspectors.ToListAsync();
         }
 
-        public void Save(Inspector inspector)
+        public async Task Save(Inspector inspector)
         {
             using var db = _contextFactory.CreateDbContext();
 
@@ -41,10 +40,10 @@ namespace InspectorServices
             if (tmp == null)
             {
                 db.Inspectors.Add(inspector);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
-        public void Update(Inspector inspector)
+        public async Task Update(Inspector inspector)
         {
             using var db = _contextFactory.CreateDbContext();
 
@@ -55,16 +54,14 @@ namespace InspectorServices
                 tmp.Email = inspector.Email;
                 tmp.Phone = inspector.Phone;
                 tmp.Name = inspector.Name;
-                tmp.Address = inspector.Address;
-                tmp.Age = inspector.Age;
-                tmp.Speialiation = inspector.Speialiation;
+            tmp.Address = inspector.Address;
+            tmp.Age = inspector.Age;
+            tmp.Speialiation = inspector.Speialiation;
 
-
-
-                db.SaveChanges();
+            await db.SaveChangesAsync();
             }
         }
-        public void Delete(Inspector inspector)
+        public async Task Delete(Inspector inspector)
         {
             using var db = _contextFactory.CreateDbContext();
 
@@ -72,7 +69,7 @@ namespace InspectorServices
             if (tmp != null)
             {
                 db.Inspectors.Remove(tmp);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
@@ -80,7 +77,7 @@ namespace InspectorServices
         {
             using var db = _contextFactory.CreateDbContext();
 
-            return [.. await db.Inspectors.ToListAsync()];
-        }
+          return [.. await db.Inspectors.ToListAsync()];
+    }
     }
 }

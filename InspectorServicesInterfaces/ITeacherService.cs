@@ -1,16 +1,15 @@
-﻿
-
-using INSPECTOR.Domain.Entities;
+﻿using INSPECTORV2.Domain.Entities;
 
 namespace InspectorServicesInterfaces
 {
     public interface ITeacherService
     {
-        void Delete(Teacher teacher);
-        Teacher Get(int id);
-        List<Teacher> GetList(string name);
-       List<Teacher> GetAll();
-        void Save(Teacher teacher);
-        void Update(Teacher teacher);
+        Task Delete(Teacher teacher);
+        Task<Teacher> Get(int id);
+        Task<List<Teacher>> GetList(string name);
+        Task<List<Teacher>> GetAll();
+        Task Save(Teacher teacher);
+        Task Update(Teacher teacher);
     }
 }
+

@@ -1,4 +1,4 @@
-﻿using INSPECTOR.Domain.Entities;
+﻿using INSPECTORV2.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

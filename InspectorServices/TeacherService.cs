@@ -1,4 +1,4 @@
-﻿using INSPECTOR.Domain.Entities;
+﻿using INSPECTORV2.Domain.Entities;
 using ClassLibrary.persistance;
 using InspectorServicesInterfaces;
 using Microsoft.EntityFrameworkCore;
@@ -12,47 +12,42 @@ namespace InspectorServices
 
         public TeacherService(IDbContextFactory<LibraryContext> contextFactory)
         {
-            _contextFactory = contextFactory;
+            _contextFactory = _contextFactory;
         }
 
-
-        public Teacher Get(int id)
+        public async Task<Teacher> Get(int id)
         {
             using var db = _contextFactory.CreateDbContext();
-
-            var teacher = db.Teachers.FirstOrDefault(x => x.Id == id);
+            var teacher = await db.Teachers.FirstOrDefaultAsync(x => x.Id == id);
             return teacher;
         }
 
-        public List<Teacher> GetList(string name)
+        public async Task<List<Teacher>> GetList(string name)
         {
             using var db = _contextFactory.CreateDbContext();
-
             var teachers = db.Teachers.Where(x => x.Name.Contains(name));
-            return [.. teachers];
+            return await teachers.ToListAsync();
         }
 
-        public void Save(Teacher teacher)
+        public async Task Save(Teacher teacher)
         {
             using var db = _contextFactory.CreateDbContext();
-
             var tmp = db.Teachers.FirstOrDefault(x => x.Id == teacher.Id);
 
             if (tmp == null)
             {
                 db.Teachers.Add(teacher);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
-        public void Update(Teacher teacher)
+
+        public async Task Update(Teacher teacher)
         {
             using var db = _contextFactory.CreateDbContext();
-
             var tmp = db.Teachers.FirstOrDefault(y => y.Id == teacher.Id);
 
             if (tmp != null)
             {
-            
                 tmp.Email = teacher.Email;
                 tmp.Phone = teacher.Phone;
                 tmp.Name = teacher.Name;
@@ -60,27 +55,26 @@ namespace InspectorServices
                 tmp.Age = teacher.Age;
                 tmp.Speialiation = teacher.Speialiation;
 
-
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
-        public void Delete(Teacher teacher)
+
+        public async Task Delete(Teacher teacher)
         {
             using var db = _contextFactory.CreateDbContext();
-
             var tmp = db.Teachers.FirstOrDefault(x => x.Id == teacher.Id);
             if (tmp != null)
             {
                 db.Teachers.Remove(tmp);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
-        public  List<Teacher> GetAll()
+        public async Task<List<Teacher>> GetAll()
         {
             using var db = _contextFactory.CreateDbContext();
-
-            return  db.Teachers.ToList();///////////////////
+            return [.. await db.Teachers.ToListAsync()];
         }
     }
 }
+

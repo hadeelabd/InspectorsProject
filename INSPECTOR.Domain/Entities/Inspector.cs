@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace INSPECTOR.Domain.Entities
+namespace INSPECTORV2.Domain.Entities
 {
     public class Inspector
     {
