@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InspectorServices", "Inspec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inspector.FluentUI2", "Inspector.FluentUI2\Inspector.FluentUI2.csproj", "{E47F2E4C-B79D-4A7D-B7C9-6C62888C9705}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspector.Tests", "Inspector.Tests\Inspector.Tests.csproj", "{E2EB040E-16C5-4E39-8F98-7EDE4D3767A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inspector.Tests", "Inspector.Tests\Inspector.Tests.csproj", "{E2EB040E-16C5-4E39-8F98-7EDE4D3767A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

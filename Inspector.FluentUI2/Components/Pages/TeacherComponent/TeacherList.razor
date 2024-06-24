@@ -1,26 +1,26 @@
-﻿@page "/inspectors"
+﻿@page "/teachers"
 @rendermode InteractiveServer
 @inject IDialogService DialogService
-@inject IInspectorService InspectorService
+@inject ITeacherService TeacherService
 @using INSPECTORV2.Domain.Entities
 @using InspectorServicesInterfaces
 
-<h3>Inspectors</h3>
+<h3>Teachers</h3>
 
 <div style="float:inline-end">
-    <FluentButton Appearance="Appearance.Accent" @onclick="ShowAddModal">Add New Inspector</FluentButton>
+    <FluentButton Appearance="Appearance.Accent" @onclick="ShowAddModal">Add New Teacher</FluentButton>
 </div>
 
 <br />
 
-@if (inspectors == null)
+@if (teachers == null)
 {
     <span>Loading...</span>
 }
 else
 {
 
-    <FluentDataGrid Items="@inspectors"
+    <FluentDataGrid Items="@teachers"
                     GenerateHeader="GenerateHeaderOption.Sticky"
                     ResizableColumns=true Pagination="@pagination"
                     Style="width: 100%; height: 500px;overflow:auto;">
@@ -34,7 +34,7 @@ else
         <PropertyColumn Property="@(p=>p.Speialiation)" Sortable="true" />
         <TemplateColumn Title="Actions" Align="@Align.End">
             <FluentButton aria-label="Edit item" IconEnd="@(new Icons.Regular.Size16.Edit())" OnClick="@(() => OpenDialogAsync(context))" />
-            <FluentButton aria-label="Delete item" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteInspector(context))" />
+            <FluentButton aria-label="Delete item" IconEnd="@(new Icons.Regular.Size16.Delete())" OnClick="@(() => DeleteTeacher(context))" />
         </TemplateColumn>
 
     </FluentDataGrid>
@@ -48,29 +48,29 @@ else
 
 @code {
 
-    private IQueryable<Inspector>? inspectors;
+    private IQueryable<Teacher>? teachers;
 
-    private AddEditInspectorDialog ? addEditInspectorDialog;
+    private AddEditTeacherDialog? addEditTeacherDialog;
 
     PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadInspectors();
+        await LoadTeachers();
     }
 
-    private async Task LoadInspectors()
+    private async Task LoadTeachers()
     {
 
-        inspectors = (await InspectorService.GetAll()).AsQueryable();
+        teachers = (await TeacherService.GetAll()).AsQueryable();
         StateHasChanged();
     }
 
-    private async Task OpenDialogAsync(Inspector inspector)
+    private async Task OpenDialogAsync(Teacher teacher)
     {
         DialogParameters parameters = new DialogParameters()
             {
-                Title = ((inspector.Id == 0) ? "Add Inspector" : "Edit Inspector"),
+                Title = ((teacher.Id == 0) ? "Add Teacher" : "Edit Teacher"),
                 PrimaryAction = "Yes",
                 PrimaryActionEnabled = false,
                 SecondaryAction = "No",
@@ -79,29 +79,30 @@ else
                 Modal = true,
                 PreventScroll = true
             };
-        var dialog = await DialogService.ShowDialogAsync<AddEditInspectorDialog>(inspector, parameters);
+        var dialog = await DialogService.ShowDialogAsync<AddEditTeacherDialog>(teacher, parameters);
         var result = await dialog.Result;
         if (!result.Cancelled && result.Data != null)
         {
-            inspector = (Inspector)result.Data;
-            await LoadInspectors();
+            teacher = (Teacher)result.Data;
+            await LoadTeachers();
         }
 
 
     }
     private async Task ShowAddModal()
     {
-        await OpenDialogAsync(new Inspector());
+        await OpenDialogAsync(new Teacher());
     }
 
-    private async void DeleteInspector(Inspector inspector)
+    private async void DeleteTeacher(Teacher teacher)
     {
-        await InspectorService.Delete(inspector);
-        await LoadInspectors();
+        await TeacherService.Delete(teacher);
+        await LoadTeachers();
     }
 
     private async void RefreshList()
     {
-        await LoadInspectors();
+        await LoadTeachers();
     }
 }
+

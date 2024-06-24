@@ -1,15 +1,10 @@
 ﻿@using INSPECTORV2.Domain.Entities
-@using Inspector.FluentUI2.Components.Pages.InspectorComponent
 @using InspectorServicesInterfaces
-@implements IDialogContentComponent // بدونه مش هنقدر اندير استدعاء 
-@inject IInspectorService InspectorService
+@implements IDialogContentComponent
 @inject ITeacherService TeacherService
-@inject IDialogService DialogService
-@inject NavigationManager NavigationManager
-
 
 <FluentDialogHeader ShowDismiss="true">
-    <h5 class="modal-title">@((Content.Id == 0) ? "Add Inspector" : "Edit Inspector")</h5>
+    <h5 class="modal-title">@((Content.Id == 0) ? "Add Teacher" : "Edit Teacher")</h5>
 </FluentDialogHeader>
 
 <FluentDialogBody>
@@ -25,6 +20,20 @@
                 <FluentGridItem xs="12" sm="6" md="6" lg="6">
                     <FluentTextField @bind-Value="@Content.Email" style="width:100%">Email</FluentTextField>
                 </FluentGridItem>
+                <FluentGridItem xs="12" sm="6" md="6" lg="6">
+                    <FluentTextField Value="@Content.Id.ToString()" style="width:100%" ReadOnly="true">Id</FluentTextField>
+                   @* <FluentTextField @bind-Value="@Content.Id" style="width:100%">Id</FluentTextField>*@
+                </FluentGridItem>
+                <FluentGridItem xs="12" sm="6" md="6" lg="6">
+                    <FluentTextField Value="@Content.Age.ToString()" style="width:100%" ReadOnly="true">Age</FluentTextField>
+                   @* <FluentTextField @bind-Value="@Content.Age" style="width:100%">Age</FluentTextField*@
+                </FluentGridItem>
+                <FluentGridItem xs="12" sm="6" md="6" lg="6">
+                    <FluentTextField @bind-Value="@Content.Address" style="width:100%">Address</FluentTextField>
+                </FluentGridItem>
+                <FluentGridItem xs="12" sm="6" md="6" lg="6">
+                    <FluentTextField @bind-Value="@Content.Speialiation" style="width:100%">Speialiation</FluentTextField>
+                </FluentGridItem>
             </FluentGrid>
         </FluentGridItem>
     </FluentGrid>
@@ -36,22 +45,18 @@
 </FluentDialogFooter>
 
 @code {
-
-
-    [Parameter] public Inspector Content { get; set; } = new();
+    [Parameter] public Teacher Content { get; set; } = new();
     [CascadingParameter] public FluentDialog Dialog { get; set; }
-
-
 
     private async Task SaveAsync()
     {
         if (Content.Id == 0)
         {
-            await InspectorService.Save(Content);
+            await TeacherService.Save(Content);
         }
         else
         {
-            await InspectorService.Update(Content);
+            await TeacherService.Update(Content);
         }
 
         await Dialog.CloseAsync(Content);
@@ -61,24 +66,7 @@
     {
         await Dialog.CloseAsync();
     }
-
 }
-ظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظ
-    private async void AddTeacherToInspector(Teacher teacher)
-    {
-        await InspectorService.AddTeacherToInspector(Content, teacher);
-        Content.Teachers.Add(teacher);
-        StateHasChanged();
-    }
 
-    private async void RemoveTeacherFromInspector(Teacher teacher)
-    {
-        await InspectorService.RemoveTeacherFromInspector(Content, teacher);
-        Content.Teachers.Remove(teacher);
-        StateHasChanged();
-    }
-    private void OpenTeachers()
-    {
-        NavigationManager.NavigateTo("/teachers");
-    }
-}
+
+

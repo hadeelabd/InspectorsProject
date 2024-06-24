@@ -1,0 +1,72 @@
+﻿@using INSPECTORV2.Domain.Entities
+@using InspectorServicesInterfaces
+@implements IDialogContentComponent
+@inject IInspectorService InspectorService
+
+<FluentDialogHeader ShowDismiss="true">
+    <h5 class="modal-title">@((Content.Id == 0) ? "Add Inspector" : "Edit Inspector")</h5>
+</FluentDialogHeader>
+
+<FluentDialogBody>
+    <FluentGrid>
+        <FluentGridItem xs="12">
+            <FluentGrid>
+                <FluentGridItem xs="12" sm="6" md="6" lg="6">
+                    <FluentTextField @bind-Value="@Content.Name" style="width:100%">Name</FluentTextField>
+                </FluentGridItem>
+                <FluentGridItem xs="12" sm="6" md="6" lg="6">
+                    <FluentTextField @bind-Value="@Content.Phone" style="width:100%">Phone</FluentTextField>
+                </FluentGridItem>
+                <FluentGridItem xs="12" sm="6" md="6" lg="6">
+                    <FluentTextField @bind-Value="@Content.Email" style="width:100%">Email</FluentTextField>
+                </FluentGridItem>
+                <FluentGridItem xs="12" sm="6" md="6" lg="6">
+                    <FluentTextField Value="@Content.Id.ToString()" style="width:100%" ReadOnly="true">Id</FluentTextField>
+                    @*<FluentTextField @bind-Value="@Content.Id" style="width:100%">Id</FluentTextField>*@
+                </FluentGridItem>
+                <FluentGridItem xs="12" sm="6" md="6" lg="6">
+                    <FluentTextField Value="@Content.Age.ToString()" style="width:100%" ReadOnly="true">Age</FluentTextField> @*حولتها الى نصي  لان يطلعلي في خطا  *@
+                    @*<FluentTextField @bind-Value="@Content.Age" style="width:100%">Age</FluentTextField>*@
+                </FluentGridItem>
+                <FluentGridItem xs="12" sm="6" md="6" lg="6">
+                    <FluentTextField @bind-Value="@Content.Email" style="width:100%">Address</FluentTextField>
+                </FluentGridItem>
+                <FluentGridItem xs="12" sm="6" md="6" lg="6">
+                    <FluentTextField @bind-Value="@Content.Email" style="width:100%">Speialiation</FluentTextField>
+                </FluentGridItem>
+            </FluentGrid>
+        </FluentGridItem>
+    </FluentGrid>
+</FluentDialogBody>
+
+<FluentDialogFooter>
+    <FluentButton Appearance="Appearance.Neutral" @onclick="Cancel">Cancel</FluentButton>
+    <FluentButton Appearance="Appearance.Accent" @onclick="SaveAsync">Save</FluentButton>
+</FluentDialogFooter>
+
+@code {
+
+    [Parameter] public Inspector Content { get; set; } = new();
+    [CascadingParameter] public FluentDialog Dialog { get; set; }
+
+    private async Task SaveAsync()
+    {
+        if (Content.Id == 0)
+        {
+            await InspectorService.Save(Content);
+        }
+        else
+        {
+            await InspectorService.Update(Content);
+        }
+
+        await Dialog.CloseAsync(Content);
+    }
+
+    private async void Cancel()
+    {
+        await Dialog.CloseAsync();
+    }
+
+}
+
