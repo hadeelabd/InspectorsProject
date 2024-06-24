@@ -3,7 +3,6 @@ using InspectorServices;
 using INSPECTORV2.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 
 namespace InspectorV2.Tests.IntegrationTests

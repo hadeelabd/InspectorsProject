@@ -6,7 +6,7 @@ using Moq;
 
 
 
-namespace Inspector.Tests.IntegrationTests
+namespace Tests.IntegrationTests
 {
     public class InspectorServiceTests
     {
@@ -32,7 +32,7 @@ namespace Inspector.Tests.IntegrationTests
             var options = CreateNewContextOptions();
             var factory = GetDbContextFactoryAsync(options);
             var service = new InspectorService(factory);
-            var inspector = new Inspector { Id = 3, Name = "Inspector1", Phone = "123456789", Email = "Inspector@company.com", Age = 40, Address = "20street", Speialiation = "math" };
+            var inspector = new INSPECTORV2.Domain.Entities.Inspector { Id = 3, Name = "Inspector1", Phone = "123456789", Email = "Inspector@company.com", Age = 40, Address = "20street", Speialiation = "math" };
 
             // Act
             await service.Save(inspector);
@@ -69,7 +69,7 @@ namespace Inspector.Tests.IntegrationTests
             var factory = GetDbContextFactoryAsync(options);
             var service = new InspectorService(factory);
             await service.Save(new Inspector { Id = 33, Name = "Inspector1", Phone = "123456789", Email = "inspector@company.com", Age = 40, Address = "20street", Speialiation = "math" });
-            await service.Save(new Inspector { Id = 33, Name = "Inspector2", Phone = "123456789", Email = "inspector@company.com", Age = 40, Address = "20street", Speialiation = "math" });
+            await service.Save(new Inspector { Id = 34, Name = "Inspector2", Phone = "123456789", Email = "inspector@company.com", Age = 40, Address = "20street", Speialiation = "math" });
 
             // Act
             var inspectors = await service.GetList("Inspector");
@@ -86,7 +86,7 @@ namespace Inspector.Tests.IntegrationTests
             var factory = GetDbContextFactoryAsync(options);
             var service = new InspectorService(factory);
             await service.Save(new Inspector { Id = 33, Name = "Inspector1", Phone = "123456789", Email = "inspector@company.com", Age = 40, Address = "20street", Speialiation = "math" });
-            await service.Save(new Inspector { Id = 33, Name = "Inspector2", Phone = "123456789", Email = "inspector@company.com", Age = 40, Address = "20street", Speialiation = "math" });
+            await service.Save(new Inspector { Id = 34, Name = "Inspector2", Phone = "123456789", Email = "inspector@company.com", Age = 40, Address = "20street", Speialiation = "math" });
 
             // Act
             var inspectors = await service.GetAll();
@@ -126,12 +126,12 @@ namespace Inspector.Tests.IntegrationTests
 
             // Act
             inspector.Id = 33;
-            inspector.Name = "Updated Inspector";
-            inspector.Email = "updatedinspector@example.com";
+            inspector.Name = "UpdatedInspector";
+            inspector.Email = "UpdatedInspector@example.com";
             inspector.Phone = "0987654321";
             inspector.Age = 40;
-            inspector.Address = "Updated Inspector";
-            inspector.Speialiation = "Updated Inspector";
+            inspector.Address = "UpdatedInspector";
+            inspector.Speialiation = "UpdatedInspector";
             await service.Update(inspector);
 
             // Assert
@@ -139,12 +139,12 @@ namespace Inspector.Tests.IntegrationTests
             var updatedinspector = await context.Inspectors.FindAsync(inspector.Id);
 
             Assert.Equal("UpdatedInspector", updatedinspector.Name);
-            Assert.Equal("updatedInspector@example.com", updatedinspector.Email);
+            Assert.Equal("UpdatedInspector@example.com", updatedinspector.Email);
             Assert.Equal("0987654321", updatedinspector.Phone);
 
             Assert.Equal(40, updatedinspector.Age);
-            Assert.Equal("updatedInspecor", updatedinspector.Address);
-            Assert.Equal("UpdatedInspectorSpeialiation", updatedinspector.Speialiation);
+            Assert.Equal("UpdatedInspector", updatedinspector.Address);
+            Assert.Equal("UpdatedInspector", updatedinspector.Speialiation);
         }
 
 
