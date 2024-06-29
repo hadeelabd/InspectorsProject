@@ -12,7 +12,7 @@ namespace InspectorServices
 
         public TeacherService(IDbContextFactory<LibraryContext> contextFactory)
         {
-            _contextFactory = _contextFactory;
+            _contextFactory = contextFactory;
         }
 
         public async Task<Teacher> Get(int id)
@@ -77,4 +77,5 @@ namespace InspectorServices
         }
     }
 }
+
 

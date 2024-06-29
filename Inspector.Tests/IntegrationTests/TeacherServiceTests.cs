@@ -4,8 +4,7 @@ using INSPECTORV2.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 
-
-namespace InspectorV2.Tests.IntegrationTests
+namespace Tests.IntegrationTests
 {
     public class TeacherServiceTests
     {
@@ -30,7 +29,7 @@ namespace InspectorV2.Tests.IntegrationTests
             var options = CreateNewContextOptions();
             var factory = GetDbContextFactoryAsync(options);
             var service = new TeacherService(factory);
-            var teacher = new Teacher { Id = 3, Name = "Teacher1", Phone = "123456789", Email = "Teacher@school.com", Age = 40, Address = "20street", Speialiation = "math" };
+            var teacher = new Teacher { Id = 53, Name = "Teacher1", Phone = "123456789", Email = "Teacher@school.com", Age = 43, Address = "20street", Speialiation = "math" };
 
             // Act
             await service.Save(teacher);
@@ -48,7 +47,7 @@ namespace InspectorV2.Tests.IntegrationTests
             var options = CreateNewContextOptions();
             var factory = GetDbContextFactoryAsync(options);
             var service = new TeacherService(factory);
-            var teacher = new Teacher { Id = 33, Name = "Teacher1", Phone = "123456789", Email = "Teacher@school.com", Age = 40, Address = "20street", Speialiation = "math" };
+            var teacher = new Teacher { Id = 53, Name = "Teacher1", Phone = "123456789", Email = "Teacher@school.com", Age = 43, Address = "20street", Speialiation = "math" };
             await service.Save(teacher);
 
             // Act
@@ -64,10 +63,10 @@ namespace InspectorV2.Tests.IntegrationTests
         {
             // Arrange
             var options = CreateNewContextOptions();
-            var factory = GetDbContextFactoryAsync(options);//////////////////
+            var factory = GetDbContextFactoryAsync(options);
             var service = new TeacherService(factory);
-            await service.Save(new Teacher { Id = 33, Name = "Teacher1", Phone = "123456789", Email = "teacher@school.com", Age = 40, Address = "20street", Speialiation = "math" });
-            await service.Save(new Teacher { Id = 33, Name = "Teacher2", Phone = "123456789", Email = "teacher@school.com", Age = 40, Address = "20street", Speialiation = "math" });
+            await service.Save(new Teacher { Id = 53, Name = "Teacher1", Phone = "123456789", Email = "Teacher@school.com", Age = 53, Address = "20street", Speialiation = "math" });
+            await service.Save(new Teacher { Id = 24, Name = "Teacher2", Phone = "123456789", Email = "Teacher@school.com", Age = 24, Address = "20street", Speialiation = "math" });
 
             // Act
             var teachers = await service.GetList("Teacher");
@@ -83,8 +82,8 @@ namespace InspectorV2.Tests.IntegrationTests
             var options = CreateNewContextOptions();
             var factory = GetDbContextFactoryAsync(options);
             var service = new TeacherService(factory);
-            await service.Save(new Teacher { Id = 33, Name = "Teacher1", Phone = "123456789", Email = "teacher@school.com", Age = 40, Address = "20street", Speialiation = "math" });
-            await service.Save(new Teacher { Id = 33, Name = "Teacher2", Phone = "123456789", Email = "teacher@school.com", Age = 40, Address = "20street", Speialiation = "math" });
+            await service.Save(new Teacher { Id = 53, Name = "Teacher1", Phone = "123456789", Email = "Teacher@school.com", Age = 43, Address = "20street", Speialiation = "math" });
+            await service.Save(new Teacher { Id = 24, Name = "Teacher2", Phone = "123456789", Email = "Teacher@school.com", Age = 64, Address = "20street", Speialiation = "math" });
 
             // Act
             var teachers = await service.GetAll();
@@ -100,7 +99,7 @@ namespace InspectorV2.Tests.IntegrationTests
             var options = CreateNewContextOptions();
             var factory = GetDbContextFactoryAsync(options);
             var service = new TeacherService(factory);
-            var teacher = new Teacher { Id = 33, Name = "Teacher1", Phone = "123456789", Email = "Teacher@school.com", Age = 40, Address = "20street", Speialiation = "math" };
+            var teacher = new Teacher { Id = 53, Name = "Teacher1", Phone = "123456789", Email = "Teacher@school.com", Age = 43, Address = "20street", Speialiation = "math" };
             await service.Save(teacher);
 
             // Act
@@ -119,30 +118,31 @@ namespace InspectorV2.Tests.IntegrationTests
             var options = CreateNewContextOptions();
             var factory = GetDbContextFactoryAsync(options);
             var service = new TeacherService(factory);
-            var teacher = new Teacher { Id = 33, Name = "Teacher1", Email = "teacher1@example.com", Phone = "1234567890", Age = 40, Address = "20street", Speialiation = "math" };
+            var teacher = new Teacher { Id = 53, Name = "Teacher1", Email = "teacher1@example.com", Phone = "1234567890", Age = 43, Address = "20street", Speialiation = "math" };
             await service.Save(teacher);
 
             // Act
-            teacher.Id = 33;
-            teacher.Name = "Updated Teacher";
-            teacher.Email = "updatedteacher@example.com";
+            teacher.Name = "UpdatedTeacher";
+            teacher.Email = "UpdatedTeacher@example.com";
             teacher.Phone = "0987654321";
-            teacher.Age = 40;
-            teacher.Address = "Updated Teacher";
-            teacher.Speialiation = "Updated Teacher";
+            teacher.Address = "UpdatedAddress";
+            teacher.Speialiation = "UpdatedSpeialiation";
+            teacher.Age = 53;
             await service.Update(teacher);
 
             // Assert
             using var context = new LibraryContext(options);
             var updatedTeacher = await context.Teachers.FindAsync(teacher.Id);
 
-            Assert.Equal("Updated Teacher", updatedTeacher.Name);
-            Assert.Equal("updatedteacher@example.com", updatedTeacher.Email);
+            Assert.Equal("UpdatedTeacher", updatedTeacher.Name);
+            Assert.Equal("UpdatedTeacher@example.com", updatedTeacher.Email);
             Assert.Equal("0987654321", updatedTeacher.Phone);
-            Assert.Equal(40, updatedTeacher.Age);
-            Assert.Equal("Updated Teacher", updatedTeacher.Address);
-            Assert.Equal("Updated Teacher", updatedTeacher.Speialiation);
+            Assert.Equal(53, updatedTeacher.Age);
+            Assert.Equal("UpdatedAddress", updatedTeacher.Address);
+            Assert.Equal("UpdatedSpeialiation", updatedTeacher.Speialiation);
         }
     }
 }
+
+
 
