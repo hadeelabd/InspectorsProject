@@ -1,17 +1,19 @@
-﻿using INSPECTORV2.Domain.Entities;
+﻿
+using INSPECTORV2.Domain.Entities;
 
-namespace InspectorServicesInterfaces
+
+namespace InspectorServicesInterfacess
 {
     public interface IInspectorService
     {
-      // void Delete(Inspector inspector);
-       // Inspector Get(int id);
-       // List<Inspector> GetList(string name);
-     
+        // void Delete(Inspector inspector);
+        // Inspector Get(int id);
+        // List<Inspector> GetList(string name);
+
         Task Delete(Inspector inspector);
         Task<Inspector> Get(int id);
         Task<List<Inspector>> GetList(string name);
-        Task <List<Inspector>> GetAll();
+        Task<List<Inspector>> GetAll();
 
         Task Save(Inspector inspector);
         Task Update(Inspector inspector);

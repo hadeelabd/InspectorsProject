@@ -1,6 +1,6 @@
 ﻿using INSPECTORV2.Domain.Entities;
 
-namespace InspectorServicesInterfaces
+namespace InspectorServicesInterfacess
 {
     public interface ITeacherService
     {
